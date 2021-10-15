@@ -1,0 +1,16 @@
+{
+  "printWidth": 120,
+  "tabWidth": 2,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "semi": true,
+  "parser": "typescript",
+  "importOrder": [
+    "^react$",
+    "^next(.*)$",
+    "^@/components/(.*)$",
+    "^@/hooks/(.*)$",
+    "^@/types/(.*)$",
+    "^(.*)$"
+  ]
+}
