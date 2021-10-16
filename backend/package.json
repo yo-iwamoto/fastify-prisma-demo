@@ -7,9 +7,9 @@
     "dev": "nodemon ./dist/main.js --watch",
     "build": "esbuild --bundle src/server.ts --platform=node --outfile=./dist/main.js",
     "build:watch": "esbuild --bundle src/server.ts --platform=node --outfile=./dist/main.js --watch",
-    "db:studio": "npx prisma studio --schema ./src/prisma/schema.prisma",
-    "db:push": "prisma db push --schema ./src/prisma/schema.prisma",
-    "db:pull": "prisma db pull --schema ./src/prisma/schema.prisma"
+    "db:studio": "npx prisma studio",
+    "db:push": "prisma db push",
+    "db:pull": "prisma db pull"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
