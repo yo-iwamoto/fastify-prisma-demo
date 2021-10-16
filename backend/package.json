@@ -6,15 +6,25 @@
   "scripts": {
     "dev": "nodemon ./dist/main.js --watch",
     "build": "esbuild --bundle src/server.ts --platform=node --outfile=./dist/main.js",
-    "build:watch": "esbuild --bundle src/server.ts --platform=node --outfile=./dist/main.js --watch"
+    "build:watch": "esbuild --bundle src/server.ts --platform=node --outfile=./dist/main.js --watch",
+    "db:studio": "npx prisma studio --schema ./src/prisma/schema.prisma",
+    "db:push": "prisma db push --schema ./src/prisma/schema.prisma",
+    "db:pull": "prisma db pull --schema ./src/prisma/schema.prisma"
+  },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "dependencies": {
+    "@prisma/client": "^3.2.1",
     "fastify": "^3.22.0"
   },
   "devDependencies": {
+    "@types/node": "^16.11.0",
     "esbuild": "^0.13.6",
     "nodemon": "^2.0.13",
     "prettier": "^2.4.1",
+    "prisma": "^3.2.1",
+    "ts-node": "^10.3.0",
     "typescript": "^4.4.4"
   }
 }
