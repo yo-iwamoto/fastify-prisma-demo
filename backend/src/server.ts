@@ -1,7 +1,8 @@
 import { fastify } from 'fastify';
+import { routes } from './config/routes';
 
 fastify({ logger: true })
-  .get('/', async (_req, rep) => {
-    rep.send({ message: 'Hello, Fastify!' });
-  })
-  .listen(3000);
+  .register(routes)
+  .listen(8000, () => {
+    console.log('server is listening on port 8000');
+  });
