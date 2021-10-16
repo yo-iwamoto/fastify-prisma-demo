@@ -23,7 +23,7 @@ export const usersController: FastifyPluginCallback = (fastify, _opt, done) => {
     };
     const { user } = req.body as RequestBody;
 
-    // TODO: sign up service
+    const userRecord = await usersService.signUp(user);
 
     rep.send({ message: 'this API has not been implemented yet' });
   });
@@ -31,9 +31,16 @@ export const usersController: FastifyPluginCallback = (fastify, _opt, done) => {
   // PATCH /users/{userId}
   fastify.patch('/:userId', async (req, rep) => {
     type RequestParams = { userId: string };
+    type RequestBody = {
+      user: {
+        email: string;
+        password: string;
+      };
+    };
     const { userId } = req.params as RequestParams;
+    const { user } = req.body as RequestBody;
 
-    // TODO: update user service
+    const userRecord = usersService.updateProfile({ id: userId, ...user });
 
     rep.send({ message: 'this API has not been implemented yet' });
   });
