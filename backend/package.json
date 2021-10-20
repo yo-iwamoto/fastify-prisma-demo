@@ -5,20 +5,22 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon ./dist/main.js --watch",
-    "build": "esbuild --bundle src/server.ts --platform=node --outfile=./dist/main.js",
     "build:watch": "esbuild --bundle src/server.ts --platform=node --outfile=./dist/main.js --watch",
-    "db:studio": "npx prisma studio --schema ./src/prisma/schema.prisma",
-    "db:push": "prisma db push --schema ./src/prisma/schema.prisma",
-    "db:pull": "prisma db pull --schema ./src/prisma/schema.prisma"
+    "build": "esbuild --bundle src/server.ts --platform=node --outfile=./dist/main.js",
+    "db:studio": "npx prisma studio",
+    "db:push": "prisma db push",
+    "db:pull": "prisma db pull"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "^3.2.1",
-    "fastify": "^3.22.0"
+    "fastify": "^3.22.0",
+    "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^8.5.5",
     "@types/node": "^16.11.0",
     "esbuild": "^0.13.6",
     "nodemon": "^2.0.13",

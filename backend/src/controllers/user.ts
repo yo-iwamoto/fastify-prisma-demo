@@ -1,44 +1,64 @@
 import type { FastifyPluginCallback } from 'fastify';
-import { handleCustomError } from '../lib/error';
+import { CustomError, handleError } from '../lib/error';
 import { usersService } from '../services/user';
 
 export const usersController: FastifyPluginCallback = (fastify, _opt, done) => {
   // GET /users/{userId}
   fastify.get('/:userId', async (req, rep) => {
-    type RequestParams = { userId: string };
-    const { userId } = req.params as RequestParams;
+    type Params = {
+      userId: string;
+    };
+    try {
+      const params = req.params as any;
+      if (!params.userId) {
+        throw new CustomError('invalid-request', 'insufficient parameters', 400);
+      }
 
-    const user = await usersService.findUser(userId).catch((err) => handleCustomError(err, rep));
+      const { userId } = params as Params;
 
-    rep.send({ user });
+      const user = await usersService.findUserById(userId);
+
+      rep.send({ user });
+    } catch (err) {
+      handleError(err, rep);
+    }
   });
 
   // POST /users
   fastify.post('/', async (req, rep) => {
-    type RequestBody = {
+    type Body = {
       user: {
         email: string;
         password: string;
       };
     };
-    const { user } = req.body as RequestBody;
+    try {
+      // const body = JSON.parse(req.body as any);
+      // if (!body.user.email || !body.user.password) {
+      //   throw new CustomError('invalid-request', 'insufficient parameters', 400);
+      // }
 
-    const userRecord = await usersService.signUp(user);
+      const { user } = req.body as Body;
 
-    rep.send({ message: 'this API has not been implemented yet' });
+      const userRecord = await usersService.signUp(user);
+
+      rep.send({ message: 'this API has not been implemented yet' });
+    } catch (err) {
+      handleError(err, rep);
+    }
   });
 
   // PATCH /users/{userId}
   fastify.patch('/:userId', async (req, rep) => {
-    type RequestParams = { userId: string };
-    type RequestBody = {
+    type Params = { userId: string };
+    type Body = {
       user: {
         email: string;
         password: string;
       };
     };
-    const { userId } = req.params as RequestParams;
-    const { user } = req.body as RequestBody;
+    const { userId } = req.params as Params;
+    const { user } = req.body as Body;
 
     const userRecord = usersService.updateProfile({ id: userId, ...user });
 
